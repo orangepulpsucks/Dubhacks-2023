@@ -1,0 +1,8 @@
+#button-stack { 
+    position: fixed;
+    bottom: 0;
+    height: 160px;
+    border-top: 1px solid #DBDBDB;
+    background-color: white;
+    z-index: 999;
+}
