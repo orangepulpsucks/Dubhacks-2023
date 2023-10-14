@@ -5,8 +5,6 @@ import { useDispatch } from 'react-redux';
 import CustomPage from '../components/CustomPage';
 import { setNewAlert } from '../service/alert';
 
-import './EventDetails.css';
-
 const EventDetails: React.FC = () => {
   const dispatch = useDispatch();
   
@@ -69,7 +67,7 @@ const EventDetails: React.FC = () => {
       </Container>
 
       {/* Buttons at bottom */}
-      <Container sx={{ py: 2 }} id="button-stack">
+      <Container sx={{ py: 2 }} className="button-stack-2">
         <Button variant="contained" fullWidth size="large"sx={{ my: 1 }}>
           Edit
         </Button>

@@ -3,12 +3,3 @@
     background-color: #0073e6;
     color: #ffffff;
 }
-
-#button-stack {
-    position: fixed;
-    bottom: 0;
-    height: 150px;
-    border-top: 1px solid #DBDBDB;
-    background-color: white;
-    z-index: 999;
-}

@@ -79,7 +79,7 @@ const Home: React.FC = () => {
       </Container>
 
       {/* Buttons at bottom */}
-      <Container sx={{ py: 2 }} id="button-stack">
+      <Container sx={{ py: 2 }} className="button-stack-2">
         <Button
           variant="contained"
           fullWidth

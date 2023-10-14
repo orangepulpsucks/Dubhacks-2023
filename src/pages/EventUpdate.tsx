@@ -5,8 +5,6 @@ import { useDispatch } from 'react-redux';
 import CustomPage from '../components/CustomPage';
 import { setNewAlert } from '../service/alert';
 
-import './EventUpdate.css';
-
 const EventUpdate: React.FC = () => {
   const dispatch = useDispatch();
   const [appointmentType, setAppointmentType] = useState('');
@@ -75,7 +73,7 @@ const EventUpdate: React.FC = () => {
       </Container>
 
       {/* Buttons at the bottom */}
-      <Container sx={{ py: 2 }} id="button-stack">
+      <Container sx={{ py: 2 }} className="button-stack-1">
         <Button variant="contained" fullWidth size="large" sx={{ my: 1 }}>
           Confirm
         </Button>

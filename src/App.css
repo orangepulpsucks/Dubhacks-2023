@@ -1,1 +1,17 @@
+.button-stack-2 {
+    position: fixed;
+    bottom: 0;
+    height: 150px;
+    border-top: 1px solid #DBDBDB;
+    background-color: white;
+    z-index: 999;
+}
 
+.button-stack-1 {
+    position: fixed;
+    bottom: 0;
+    height: 100px;
+    border-top: 1px solid #DBDBDB;
+    background-color: white;
+    z-index: 999;
+}
