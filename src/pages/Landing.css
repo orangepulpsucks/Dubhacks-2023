@@ -1,0 +1,43 @@
+#everything {
+	background: linear-gradient(-45deg, #FFF3EF, #FFEDF4, #EBFAFF, #EDFFFB);
+	background-size: 400% 400%;
+	animation: gradient 15s ease infinite;
+	height: 100vh;
+    padding-top: calc(25vh);
+}
+
+#landing-logo {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: calc(20vh);
+}
+  
+#landing-text {
+    text-align: center;
+    font-size: 40px;
+    font-weight: bold;
+    margin-top: calc(3vh);
+    color: #0073e6;
+}
+  
+#landing-button {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: calc(15vh);
+    width: 80%;
+    padding: 10px;
+}
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}

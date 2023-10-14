@@ -1,10 +1,11 @@
 import React from 'react';
-import { Button, Container, Typography } from '@mui/material';
+import { Button, Container, Grid, Typography, IconButton } from '@mui/material';
 import { useDispatch } from 'react-redux';
 
 import CustomPage from '../components/CustomPage';
 import { setNewAlert } from '../service/alert';
 
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
 
 import './Home.css';
@@ -34,15 +35,24 @@ const Home: React.FC = () => {
           hardCodedEvents.map((event, i) => {
             return (
               <Container key={i} sx={{ my: 1, py: 1 }} className="event-item">
-                <Typography variant="h5" sx={{ fontWeight: "bold" }}>
-                  Lunch with Johnny
-                </Typography>
-                <Typography variant="body1">
-                  December 9, 2023
-                </Typography>
-                <Typography variant="body1">
-                  12:00 PM - 1:00 PM
-                </Typography>
+                <Grid container>
+                  <Grid item xs={9} sm={10} md={11}>
+                    <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+                      Lunch with Johnny
+                    </Typography>
+                    <Typography variant="body1">
+                      December 9, 2023
+                    </Typography>
+                    <Typography variant="body1">
+                      12:00 PM - 1:00 PM
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={3} sm={2} md={1} sx={{ display: "flex" }}>
+                    <IconButton size="large" sx={{ "margin-left": "auto", color: "#ffffff" }}>
+                      <ArrowForwardIcon fontSize="inherit"/>
+                    </IconButton>
+                  </Grid>
+                </Grid>
               </Container>
             )
           })
