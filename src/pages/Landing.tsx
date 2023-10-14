@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button, Container, Typography } from '@mui/material';
 import { useDispatch } from 'react-redux';
 
@@ -9,10 +9,6 @@ import './Landing.css';
 
 const Landing: React.FC = () => {
   const dispatch = useDispatch();
-
-  const alertHandler = () => {
-    setNewAlert(dispatch, { msg: "Hello world!" });
-  }
   
   return (
     <CustomPage>
