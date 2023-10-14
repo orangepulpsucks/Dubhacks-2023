@@ -1,0 +1,7 @@
+{
+  "name": "Snip-Cal",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react-vite"
+}
