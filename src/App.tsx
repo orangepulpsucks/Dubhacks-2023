@@ -8,6 +8,9 @@ import { IonReactRouter } from '@ionic/react-router';
 
 /* Your page imports */
 import Landing from './pages/Landing';
+import Home from './pages/Home';
+import EventDetails from './pages/EventDetails';
+import EventUpdate from './pages/EventUpdate';
 
 /* Basic CSS for apps built with Ionic */
 import '@ionic/react/css/normalize.css';
@@ -38,6 +41,15 @@ const App: React.FC = () => {
           {/** Page routing here */}
           <Route exact path="/">
             <Landing />
+          </Route>
+          <Route exact path="/home">
+            <Home />
+          </Route>
+          <Route exact path="/event/:id/details">
+            <EventDetails />
+          </Route>
+          <Route exact path="/event/:id/update">
+            <EventUpdate />
           </Route>
         </IonRouterOutlet>
       </IonReactRouter>
