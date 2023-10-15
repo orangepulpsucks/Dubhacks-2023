@@ -125,6 +125,8 @@ const EventUpdate: React.FC = () => {
           onChange={handleTitleChange}
           sx={{ mb: 1 }}
         />
+          <hr style={{ backgroundColor: "white", height: "1px", border: "none" }} />
+
         <TextField
           label="Additional Notes"
           variant="outlined"
@@ -133,6 +135,8 @@ const EventUpdate: React.FC = () => {
           onChange={handleDescriptionChange}
           sx={{ mb: 1 }}
         />
+
+        
 
         <Typography variant="body1" sx={{ fontWeight: "bold", fontSize: "20px", fontFamily: "Helvetica, sans-serif", marginBottom: "5px", color: "#3a3b3c" }}>
           Event Date
