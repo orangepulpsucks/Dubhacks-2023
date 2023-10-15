@@ -14,7 +14,7 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
 
 const selectedColors = [
-  'rgb(139, 171, 241, 0.7)'
+  'rgb(139, 171, 241, 0.6)'
 ];
 
 // Function to generate random pastel colors
@@ -132,9 +132,7 @@ const Home: React.FC = () => {
                     <Typography variant="body1" sx={{ fontSize: "20px" }}>
                       December 9, 2023
                     </Typography>
-                    <Typography variant="body1" sx={{ fontSize: "20px" }}>
-                      12:00 PM - 1:00 PM
-                    </Typography>
+                   
                   </Grid>
                   <Grid item xs={3} sm={2} md={1} sx={{ display: "flex" }}>
                     <IconButton size="large" sx={{ marginLeft: "auto", color: "#ffffff" }}>
@@ -155,7 +153,7 @@ const Home: React.FC = () => {
           fullWidth
           size="large"
           startIcon={<CameraAltIcon />}
-          sx={{ my: 1, borderRadius: "30px", color: "white" }}
+          sx={{ my: 1, borderRadius: "30px", color: "white", backgroundColor: "#82B56A" }}
           onClick={takePicture}
         >
           Snip Event
@@ -165,7 +163,7 @@ const Home: React.FC = () => {
           color="secondary"
           fullWidth
           size="large"
-          sx={{ mb: 1 }}
+          sx={{ mb: 1, color: "white", borderRadius: "30px", backgroundColor: "#8BABF1" }}
           onClick={manualCreate}
         >
           Create Event Manually
