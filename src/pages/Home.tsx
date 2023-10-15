@@ -162,9 +162,9 @@ const Home: React.FC = () => {
             )
           })
           :
-          <Typography textAlign="center" sx={{ mt: 2 }}>
-            You have no upcoming events!
-          </Typography>
+         <Typography sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', height: '60vh', fontFamily: "Helvetica, sans-serif", color: "gray" }}>
+          No upcoming events.
+        </Typography>        
         }
       </Container>
 
