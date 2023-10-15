@@ -1,5 +1,3 @@
-import { test} from './util.mjs'
-
 const fs = require('fs').promises;
 const path = require('path');
 const process = require('process');
@@ -69,39 +67,46 @@ async function authorize() {
 }
 
 
-let name = test.parameters.properties.title.title;
-let summary = test.parameters.properties.title.description;
+test =  {
+  title: 'Hey',
+  startDate: {month: 10, day: 18, year: 2023},
+  priority: 2
+}
 
-let start_date = test.parameters.properties.start_Date;
-let start_date_year = test.parameters.properties.year;
-let start_date_month =test.parameters.properties.month;
-let start_date_day = test.parameters.properties.day;
 
-let start_date_year_string = start_date_year.toISOString;
-let start_date_month_string = start_date_month.toISOString;
-let start_date_day_string = start_date_day.toISOString;
-let start_date_finalize = '${start_date_year_string}${-}${start_date_month_string}${-}${start_date_day}${T}${start_date_year_string}${-}${start_date_month_string}${-}${start_date_day}';
+let name = test.title;
 
+let start_date = test.startDate;
+let start_date_year = start_date.year;
+let start_date_month =start_date.month;
+let start_date_day = start_date.day;
+
+let start_date_finalize = start_date_year+"-"+start_date_month+"-"+start_date_day;
+
+console.log (start_date_finalize)
 
 let user_gmail = 'steveng.gwy@gmail.com';
 
-let color = test.parameters.properties.priority;
+let color = test.priority;
+
+let name_finalize = name + ' (' + color + ')';
+
+
 
 const event = {
-  'summary': name,
-  'description' : summary,
+  'summary': name_finalize,
   'start': {
     'date': start_date_finalize,
   },
   'end': {
-    'dateTime': start_date_finalize,
+    'date': start_date_finalize,
   },
   'recurrence': [
     'RRULE:FREQ=DAILY;COUNT=2'
   ],
-  'colorId' : color,
+  'colorId' : 2,
   'attendees': [
-    {user_gmail}
+    {'email': user_gmail}
   ],
   'reminders': {
     'useDefault': false,
@@ -113,6 +118,34 @@ const event = {
 };
 
 
+/*
+const event = {
+  'summary': 'Google I/O 2015',
+  'location': '800 Howard St., San Francisco, CA 94103',
+  'description': 'A chance to hear more about Google\'s developer products.',
+  'start': {
+    'dateTime': '2023-10-29T17:00:00-07:00',
+    'timeZone': 'America/Los_Angeles',
+  },
+  'end': {
+    'dateTime': '2023-10-29T17:00:00-07:00',
+    'timeZone': 'America/Los_Angeles',
+  },
+  'recurrence': [
+    'RRULE:FREQ=DAILY;COUNT=2'
+  ],
+  'attendees': [
+    {'email': 'steveng.gwy@gmail.com'}
+  ],
+  'reminders': {
+    'useDefault': false,
+    'overrides': [
+      {'method': 'email', 'minutes': 24 * 60},
+      {'method': 'popup', 'minutes': 10},
+    ],
+  },
+};
+*/
 
 
 async function clearSavedUser() {
@@ -137,13 +170,15 @@ async function insertEvent(auth) {
   });
 }
 
-
+/*
+Lists next 15 events within the of current event
+*/
 async function listEvents(auth) {
   const calendar = google.calendar({version: 'v3', auth});
   const res = await calendar.events.list({
     calendarId: 'primary',
     timeMin: new Date().toISOString(),
-    maxResults: 10,
+    maxResults: 15,
     singleEvents: true,
     orderBy: 'startTime',
   });
@@ -160,5 +195,6 @@ async function listEvents(auth) {
 }
 
 
-authorize().then(insertEvent).catch(console.error);
-//authorize().then(listEvents).catch(console.error);
+//authorize().then(insertEvent).catch(console.error);
+authorize().then(listEvents).catch(console.error);
+
