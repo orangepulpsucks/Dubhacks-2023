@@ -1,8 +1,9 @@
 # Snip-Cal 🌿
+We are **CTRL + ALT + DEFEAT**! This is our submission for **Dubhacks '23**. We've come together to create **Snip-Cal** 🌿 an app that simplifies appointment management for seniors. Just take of an appointment or any physical note and **Snip-Cal** 🌿 will automatically schedule the appointment right into your Google Calendar.
 
-This is source code for the DubHacks 2023 hackathon.
+**Hackathon Submission:**
 
-## Getting started
+# Getting Started(Source Code)
 
 1. Install dependencies in the project directory:
 
