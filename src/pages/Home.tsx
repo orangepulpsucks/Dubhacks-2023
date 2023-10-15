@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, Container, Grid, Typography, IconButton } from '@mui/material';
 import { useDispatch } from 'react-redux';
 import { Camera, CameraResultType } from '@capacitor/camera';
+import { useHistory } from 'react-router';
 
 import CustomPage from '../components/CustomPage';
 import { setNewAlert } from '../service/alert';
@@ -9,10 +10,9 @@ import { setNewAlert } from '../service/alert';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
 
-import './Home.css';
-
 const Home: React.FC = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   // Camera handler
   const takePicture = async () => {
@@ -25,6 +25,10 @@ const Home: React.FC = () => {
     // image.webPath will contain a path that can be set as an image src
     // You can access the original file using image.path
     const imageUrl = image.webPath;
+
+    // TODO: GET JSON AND SET IN REDUX
+
+    history.push('/event/new/update');
   };
 
   const hardCodedEvents = [

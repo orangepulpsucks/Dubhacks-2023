@@ -1,78 +1,82 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Container, Typography } from '@mui/material';
-import { useDispatch } from 'react-redux';
+import { useHistory, useParams } from 'react-router';
 
 import CustomPage from '../components/CustomPage';
-import { setNewAlert } from '../service/alert';
+import { setLast } from '../store/slices/events';
+
+const months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December"
+]
 
 const EventDetails: React.FC = () => {
-  const dispatch = useDispatch();
+  const history = useHistory();
+  const { id }: any = useParams();
+  const [state, setState] = useState({
+    title: 'Loading...',
+    date: {
+        day: 1,
+        month: 1,
+        year: 2023
+    },
+    description: '',
+    priority: 3
+  });
+
+  // Button handlers
+  const handleEdit = () => {
+    history.push('/event/' + id + '/update');
+  }
   
-  const hardCodedEvents = [0]
-  
+  const handleCancel = () => {
+    history.push('/home');
+  }
+    
   return (
     <CustomPage contentHeight="calc(100% - 150px)">
       {/* Header */}
       <Container sx={{ my: 3, px: 2, width: "100%" }}>
         <Typography variant="h4" sx={{ fontWeight: "bold" }}>
-          Hi, Bobby!
-        </Typography>
-        <Typography variant="body1">
-          Here is your detailed schedule.
+          View Event
         </Typography>
       </Container>
 
       {/* Events */}
       <Container sx={{ px: 2 }}>
-        {
-          hardCodedEvents.map((event, i) => {
-            return (
-              <Container key={i} sx={{ my: 1, py: 1 }} className="event-item">
-                <Typography variant="h5" sx={{ fontWeight: "bold" }}>
-                  Lunch with Johnny
-                </Typography>
-                <br /> 
-                <Typography variant="body1">
-                  December 9, 2023
-                </Typography>
-                <Typography variant="body1">
-                  12:00 PM - 1:00 PM
-                </Typography>
-                <br /> 
-                <Typography variant="body1">
-                Address:
-                </Typography>
-                <Typography variant="body1">
-                4001 E Stevens Way NE
-                </Typography>
-                <Typography variant="body1">
-                Seattle, WA 98195
-                </Typography>
-                <br /> 
-                <Typography variant="body1">
-                Additional notes:
-                </Typography>
-                <Typography variant="body1">
-                Don't forget housewarming gift!
-                </Typography>
-                <br /> 
-                <br /> 
-                
-
-
-              </Container>
-            )
-          })
-        }
+        <Container sx={{ my: 1, py: 2 }} className="event-item">
+          <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+            {state.title}
+          </Typography>
+          <Typography variant="body1">
+            {months[state.date.month-1]} {state.date.day}, {state.date.year}
+          </Typography>
+          <Typography variant="body1" sx={{ fontWeight: "bold", mt: 2 }}>
+            Additional notes:
+          </Typography>
+          <Typography variant="body1">
+            {state.description ? state.description : "None"}
+          </Typography>
+        </Container>
       </Container>
 
       {/* Buttons at bottom */}
       <Container sx={{ py: 2 }} className="button-stack-2">
-        <Button variant="contained" fullWidth size="large"sx={{ my: 1 }}>
+        <Button variant="contained" fullWidth size="large"sx={{ my: 1 }} onClick={handleEdit}>
           Edit
         </Button>
-        <Button variant="outlined" color="secondary" fullWidth size="large" sx={{ mb: 1 }}>
-          Remove
+        <Button variant="outlined" color="secondary" fullWidth size="large" sx={{ mb: 1 }} onClick={handleCancel}>
+          Cancel
         </Button>
       </Container>
     </CustomPage>
