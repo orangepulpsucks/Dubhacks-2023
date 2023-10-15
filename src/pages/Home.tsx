@@ -126,10 +126,14 @@ const Home: React.FC = () => {
     <CustomPage contentHeight="calc(100% - 150px)">
       {/* Header */}
       <Container sx={{ my: 3, px: 2, width: "100%" }}>
-        <Typography variant="h4" sx={{ fontWeight: "bold", fontSize: "39px", fontFamily: "Helvetica, sans-serif", marginBottom: "5px", color: "#3a3b3c" }}>
-          Hello, Bobby!
+        <Typography variant="h4" sx={{  fontSize: "20px", fontFamily: "Helvetica, sans-serif", marginBottom: "-2px", color: "gray" }}>
+          Hello,
         </Typography>
-        <Typography variant="body1" sx={{ fontSize: "15px", fontFamily: "Helvetica, sans-serif", color: "gray", lineHeight: "1" }}>
+        <Typography variant="h4" sx={{ fontWeight: "bold", fontSize: "39px", fontFamily: "Helvetica, sans-serif", marginBottom: "5px", color: "#3a3b3c" }}>
+          Hi Bobby
+        </Typography>
+
+        <Typography variant="body1" sx={{ fontSize: "15px", fontFamily: "Helvetica, sans-serif", color: "gray", lineHeight: "1", marginBottom: "-1px" }}>
         &nbsp;An overview of your upcoming plans.
         </Typography>
       </Container>
