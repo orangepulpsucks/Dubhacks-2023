@@ -88,14 +88,14 @@ const EventUpdate: React.FC = () => {
     <CustomPage contentHeight="calc(100% - 100px)">
       {/* Header */}
       <Container sx={{ my: 3, px: 2, width: "100%" }}>
-        <Typography variant="h4" sx={{ fontWeight: "bold" }}>
+        <Typography variant="h4" sx={{ fontWeight: "bold", fontSize: "39px", fontFamily: "Helvetica, sans-serif", marginBottom: "5px", color: "#3a3b3c" }}>
           {isCreate ? 'Create' : 'Update'} Event
         </Typography>
       </Container>
 
       {/* Events */}
       <Container sx={{ px: 2 }}>
-        <Typography variant="body1" sx={{ mx: 1, mt: 2, mb: 1, fontWeight: "bold" }}>
+        <Typography variant="body1" sx={{ fontWeight: "bold", fontSize: "20px", fontFamily: "Helvetica, sans-serif", marginBottom: "5px", color: "#3a3b3c" }}>
           Event Details
         </Typography>
         <TextField
@@ -115,7 +115,7 @@ const EventUpdate: React.FC = () => {
           sx={{ mb: 1 }}
         />
 
-        <Typography variant="body1" sx={{ mx: 1, mt: 2, mb: 1, fontWeight: "bold" }}>
+        <Typography variant="body1" sx={{ fontWeight: "bold", fontSize: "20px", fontFamily: "Helvetica, sans-serif", marginBottom: "5px", color: "#3a3b3c" }}>
           Event Date
         </Typography>
         <Grid container spacing={1}>
@@ -174,7 +174,7 @@ const EventUpdate: React.FC = () => {
           </Grid>
         </Grid>
 
-        <Typography variant="body1" sx={{ mx: 1, mt: 2, mb: 1, fontWeight: "bold" }}>
+        <Typography variant="body1" sx={{ fontWeight: "bold", fontSize: "20px", fontFamily: "Helvetica, sans-serif", marginBottom: "5px", color: "#3a3b3c" }}>
           Event Importance
         </Typography>
         <Select
@@ -193,10 +193,10 @@ const EventUpdate: React.FC = () => {
 
       {/* Buttons at the bottom */}
       <Container sx={{ py: 2 }} className="button-stack-2">
-        <Button variant="contained" fullWidth size="large" sx={{ my: 1 }} onClick={handleConfirm}>
+        <Button variant="contained" fullWidth size="large" sx={{ my: 1, borderRadius: "30px" }} onClick={handleConfirm}>
           Confirm
         </Button>
-        <Button variant="outlined" color="secondary" fullWidth size="large" sx={{ mb: 1 }} onClick={handleCancel}>
+        <Button variant="outlined" color="secondary" fullWidth size="large" sx={{ mb: 1, borderRadius: "30px" }} onClick={handleCancel}>
           Cancel
         </Button>
       </Container>
