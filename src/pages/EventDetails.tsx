@@ -6,6 +6,7 @@ import CustomPage from '../components/CustomPage';
 import { setLast } from '../store/slices/events';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectAllState } from '../store/slices/events';
+import { priorityColors } from './Home';
 
 const months = [
   "January",
@@ -73,7 +74,7 @@ const EventDetails: React.FC = () => {
 
       {/* Events */}
       <Container sx={{ px: 2 }}>
-        <Container sx={{ my: 1, py: 2 }} className="event-item">
+        <Container sx={{ my: 1, py: 2, backgroundColor: priorityColors[state.priority - 1] }} className="event-item">
           <Typography variant="h5" sx={{ fontWeight: "bold" }}>
             {state.title}
           </Typography>

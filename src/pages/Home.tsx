@@ -15,9 +15,15 @@ import { selectAllState } from '../store/slices/events';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
 
-const selectedColors = [
-  'rgb(139, 171, 241, 0.6)'
-];
+
+
+export const priorityColors = [
+  "#A8F5AF",
+  "#80ED99",
+  "#57CC99",
+  "#38A3A5",
+  "#22577A"
+]
 
 const months = [
   "January",
@@ -33,16 +39,6 @@ const months = [
   "November",
   "December"
 ]
-
-// Function to generate random pastel colors
-function getRandomColor() {
-  const letters = '0123456789ABCDEF';
-  let color = '#';
-  for (let i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)];
-  }
-  return color;
-}
 
 const Home: React.FC = () => {
   const dispatch = useDispatch();
@@ -126,11 +122,8 @@ const Home: React.FC = () => {
     <CustomPage contentHeight="calc(100% - 150px)">
       {/* Header */}
       <Container sx={{ my: 3, px: 2, width: "100%" }}>
-        <Typography variant="h4" sx={{  fontSize: "20px", fontFamily: "Helvetica, sans-serif", marginBottom: "-2px", color: "gray" }}>
-          Hello,
-        </Typography>
         <Typography variant="h4" sx={{ fontWeight: "bold", fontSize: "39px", fontFamily: "Helvetica, sans-serif", marginBottom: "5px", color: "#3a3b3c" }}>
-          Hi Bobby
+          Hello there!
         </Typography>
 
         <Typography variant="body1" sx={{ fontSize: "15px", fontFamily: "Helvetica, sans-serif", color: "gray", lineHeight: "1", marginBottom: "-1px" }}>
@@ -142,7 +135,7 @@ const Home: React.FC = () => {
       <Container sx={{ px: 2 }}>
         {events.length > 0 ?
           events.map((event: any, i: any) => {
-            const backgroundColor = selectedColors[i % selectedColors.length];            
+            const backgroundColor = priorityColors[event.priority - 1];
             return (
               <Container key={i} sx={{ my: 1, py: 1 }} className="event-item" style={{ backgroundColor }}>
                 <Grid container>
