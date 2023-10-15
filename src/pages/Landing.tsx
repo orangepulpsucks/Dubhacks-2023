@@ -44,7 +44,7 @@ const Landing: React.FC = () => {
       <Container id="everything">
         <img src="./favicon.svg" id='landing-logo' />
         <Typography id='landing-text'>Snip-Cal 🌿</Typography>
-        <Button id='landing-button' variant="contained" onClick={() => login()}>
+        <Button id='landing-button' sx={{ fontSize: '16px' }}variant="contained" onClick={() => login()}>
           Connect with Google Calendar
         </Button>
         </Container>
