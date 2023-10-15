@@ -184,14 +184,31 @@ async function listEvents(auth) {
   });
   const events = res.data.items;
   if (!events || events.length === 0) {
-    console.log('No upcoming events found.');
     return;
   }
-  console.log('Upcoming 10 events:');
+
+
+  eventJsons = Array.from({length: 5});
+
   events.map((event, i) => {
-    const start = event.start.dateTime || event.start.date;
-    console.log(`${start} - ${event.summary}`);
+    const dateArr = event.start.date.split("-").map(str => parseInt(str, 10));
+    const title = event.summary;
+    const summary = event.description;
+    const priority = 3;
+    if (title.length >= 3 && title.charAt(title.length-3) == '(' && Number.isInteger(title.charAt(title.length-2)) && title.charAt(title.length-1) == ')') {
+      priority = parseInt(title.charAt(title.length-2));
+    }
+
+    json =  {
+      title: title,
+      summary: summary,
+      date: {month: dateArr[1], day: dateArr[2], year: dateArr[0]},
+      priority: priority
+    };
+
+    eventJsons[i] = [event.id, json];
   });
+  return eventJsons;
 }
 
 
