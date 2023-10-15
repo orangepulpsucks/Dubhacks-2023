@@ -6,14 +6,18 @@ import Alert from './Alert';
 
 interface ComponentProps {
   children?: ReactNode;
+  contentHeight?: string;
 }
 
-const CustomPage: React.FC<ComponentProps> = ({ children = [] }: ComponentProps) => {
+const CustomPage: React.FC<ComponentProps> = ({ contentHeight = "100%", children = [] }: ComponentProps) => {
   
   const theme: any = createTheme({
     palette: {
       primary: {
-        main: "#ae41e0",
+        main: "#8BABF1",
+      },
+      secondary: {
+        main: "#6c757d",
       }
     },
     shape: {
@@ -23,7 +27,7 @@ const CustomPage: React.FC<ComponentProps> = ({ children = [] }: ComponentProps)
 
   return (
     <ThemeProvider theme={theme}>
-      <IonContent forceOverscroll={false}>
+      <IonContent forceOverscroll={false} style={{ height: contentHeight }}>
         { children }
         <Alert />
       </IonContent>
