@@ -72,7 +72,7 @@ class GenEventInfo {
     this.today = new Date();
   }
 
-  // Async method to loads up the tesseract worker
+  // Loads up the worker for tess. CALL BEFORE TRYING OTHER FUNCTIONS
   async init() {
     this.tessWorker = await createWorker('eng', 1, {
       logger: m => console.log(m), // Add logger here
