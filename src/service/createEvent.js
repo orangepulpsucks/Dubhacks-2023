@@ -66,14 +66,65 @@ async function authorize() {
   return client;
 }
 
-let start_date = '2023-10-29T09:00:00-07:00'
 
+test =  {
+  title: 'Hey',
+  startDate: {month: 10, day: 18, year: 2023},
+  priority: 2
+}
+
+
+let name = test.title;
+
+let start_date = test.startDate;
+let start_date_year = start_date.year;
+let start_date_month =start_date.month;
+let start_date_day = start_date.day;
+
+let start_date_finalize = start_date_year+"-"+start_date_month+"-"+start_date_day;
+
+console.log (start_date_finalize)
+
+let user_gmail = 'steveng.gwy@gmail.com';
+
+let color = test.priority;
+
+let name_finalize = name + ' (' + color + ')';
+
+
+
+const event = {
+  'summary': name_finalize,
+  'start': {
+    'date': start_date_finalize,
+  },
+  'end': {
+    'date': start_date_finalize,
+  },
+  'recurrence': [
+    'RRULE:FREQ=DAILY;COUNT=2'
+  ],
+  'colorId' : 2,
+  'attendees': [
+    {'email': user_gmail}
+  ],
+  'reminders': {
+    'useDefault': false,
+    'overrides': [
+      {'method': 'email', 'minutes': 24 * 60},
+      {'method': 'popup', 'minutes': 10},
+    ],
+  },
+};
+
+
+/*
 const event = {
   'summary': 'Google I/O 2015',
   'location': '800 Howard St., San Francisco, CA 94103',
   'description': 'A chance to hear more about Google\'s developer products.',
   'start': {
-    'dateTime': start_date,
+    'dateTime': '2023-10-29T17:00:00-07:00',
     'timeZone': 'America/Los_Angeles',
   },
   'end': {
@@ -94,6 +145,8 @@ const event = {
     ],
   },
 };
+*/
+
 
 async function clearSavedUser() {
   const content = await fs.readFile(CREDENTIALS_PATH);
@@ -117,13 +170,15 @@ async function insertEvent(auth) {
   });
 }
 
-
+/*
+Lists next 15 events within the of current event
+*/
 async function listEvents(auth) {
   const calendar = google.calendar({version: 'v3', auth});
   const res = await calendar.events.list({
     calendarId: 'primary',
     timeMin: new Date().toISOString(),
-    maxResults: 10,
+    maxResults: 15,
     singleEvents: true,
     orderBy: 'startTime',
   });
@@ -140,5 +195,6 @@ async function listEvents(auth) {
 }
 
 
-authorize().then(insertEvent).catch(console.error);
-//authorize().then(listEvents).catch(console.error);
+//authorize().then(insertEvent).catch(console.error);
+authorize().then(listEvents).catch(console.error);
+
