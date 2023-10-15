@@ -18,7 +18,8 @@
     font-size: 40px;
     font-weight: bold;
     margin-top: calc(3vh);
-    color: #0073e6;
+    color: #7196e7;
+    font-family: 'Helvetica', sans-serif
 }
   
 #landing-button {
@@ -28,8 +29,12 @@
     margin-top: calc(15vh);
     width: 80%;
     padding: 10px;
+    background-color: #82B56A; /* Change to the desired background color */
+    color: #FFFFFF; /* Change to the desired text color */
+    border-radius: 30px; /* Adjust the border radius to change the button shape */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Add shadow for depth (optional) */
+    font-family: 'Helvetica', sans-serif
 }
-
 @keyframes gradient {
 	0% {
 		background-position: 0% 50%;
