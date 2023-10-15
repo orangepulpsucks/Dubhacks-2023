@@ -136,14 +136,14 @@ export function getJson(ajv, t, p, sDay, sMonth, sYear, eDay = null, eMonth = nu
       title: t,
       startDate: {month: sMonth, day: sDay, year: sYear},
       priority: p
-    }
+    };
   } else {
     json = {
       title: t,
       startDate: {month: sMonth, day: sDay, year: sYear},
       endDate: {month: eMonth, day: eDay, year: eYear},
       priority: p
-    }
+    };
   }
 
   const valid = ajv.validate(SCHEMA.parameters, json);
