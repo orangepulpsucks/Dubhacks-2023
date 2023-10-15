@@ -12,16 +12,9 @@ const range = (start: number, stop: number) => {
   return Array.from({ length: (stop - start) }, (_, i) => start + i);
 }
 
-// Custom query hook
-function useQuery() {
-  const { search } = useLocation();
-  return React.useMemo(() => new URLSearchParams(search), [search]);
-}
-
 const EventUpdate: React.FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const query = useQuery();
   const lastEvent = useSelector(selectLastState);
   const { id }: any = useParams();
   const isCreate = id == 'new' ? true : false;
@@ -39,7 +32,7 @@ const EventUpdate: React.FC = () => {
 
   // Fill in params
   useEffect(() => {
-    if (!isCreate) {
+    if (lastEvent) {
       setData({
         title: lastEvent.title,
         date: {
@@ -59,7 +52,11 @@ const EventUpdate: React.FC = () => {
   }
 
   const handleCancel = () => {
-    history.push('/event/' + id + '/details');
+    if(isCreate) {
+      history.push('/home');
+    } else {
+      history.push('/event/' + id + '/details');
+    }
   }
 
   // Change handlers

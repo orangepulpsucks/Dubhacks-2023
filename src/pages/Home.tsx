@@ -5,7 +5,10 @@ import { Camera, CameraResultType } from '@capacitor/camera';
 import { useHistory } from 'react-router';
 
 import CustomPage from '../components/CustomPage';
+import GenEventInfo from '../service/util';
 import { setNewAlert } from '../service/alert';
+import { setLast } from '../store/slices/events';
+import { OPENAI_KEY } from '../keys';
 
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
@@ -13,6 +16,12 @@ import CameraAltIcon from '@mui/icons-material/CameraAlt';
 const Home: React.FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
+
+  const generator = new GenEventInfo(OPENAI_KEY);
+  let generatorReady = false;
+  generator.init().then(() => {
+    generatorReady = true;
+  });
 
   // Camera handler
   const takePicture = async () => {
@@ -26,10 +35,56 @@ const Home: React.FC = () => {
     // You can access the original file using image.path
     const imageUrl = image.webPath;
 
-    // TODO: GET JSON AND SET IN REDUX
+    // Get JSON and set in redux
+    if (generatorReady) {
+      setNewAlert(dispatch, {
+        alertType: 'success',
+        msg: 'Hold on a second, we are processing your image...'
+      });
+
+      let txt = await generator.parseEventFromImage(imageUrl);
+      if(!txt) {
+        setNewAlert(dispatch, {
+          alertType: 'error',
+          msg: 'Sorry, we were unable to extract information from your snip'
+        });
+      } else {
+        dispatch(setLast({
+          title: txt.title,
+          date: txt.date,
+          description: txt.summary,
+          priority: txt.priority
+        }));
+
+        setNewAlert(dispatch, {
+          alertType: 'success',
+          msg: 'Please review the information about your event'
+        });
+        
+        history.push('/event/new/update');
+      }
+    } else {
+      setNewAlert(dispatch, {
+        alertType: 'error',
+        msg: 'Sorry, the app is not ready yet, please retry shortly'
+      });
+    }
+  };
+
+  const manualCreate = async () => {
+    dispatch(setLast({
+      title: '',
+      date: {
+        day: 1,
+        month: 1,
+        year: 2023
+      },
+      description: '',
+      priority: 3
+    }));
 
     history.push('/event/new/update');
-  };
+  }
 
   const hardCodedEvents = [
     0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 234, 52, 3
@@ -89,7 +144,14 @@ const Home: React.FC = () => {
         >
           Snip Event
         </Button>
-        <Button variant="outlined" color="secondary" fullWidth size="large" sx={{ mb: 1 }}>
+        <Button
+          variant="outlined"
+          color="secondary"
+          fullWidth
+          size="large"
+          sx={{ mb: 1 }}
+          onClick={manualCreate}
+        >
           Create Event Manually
         </Button>
       </Container>
