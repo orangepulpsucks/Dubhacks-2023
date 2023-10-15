@@ -67,7 +67,7 @@ const EventDetails: React.FC = () => {
     <CustomPage contentHeight="calc(100% - 150px)">
       {/* Header */}
       <Container sx={{ my: 3, px: 2, width: "100%" }}>
-        <Typography variant="h4" sx={{ fontWeight: "bold", fontSize: "39px", fontFamily: "Helvetica, sans-serif", marginBottom: "5px", color: "#3a3b3c" }}>
+        <Typography variant="h4" sx={{ fontWeight: "bold", fontSize: "35px", fontFamily: "Helvetica, sans-serif", marginBottom: "-5px", color: "#3a3b3c" }}>
           View Event
         </Typography>
       </Container>
@@ -78,13 +78,13 @@ const EventDetails: React.FC = () => {
           <Typography variant="h5" sx={{ fontWeight: "bold" }}>
             {state.title}
           </Typography>
-          <Typography variant="body1">
+          <Typography variant="body1" sx={{ marginTop: "10px", marginBottom: "-8px", fontSize: "17" }}>
             {months[state.date.month-1]} {state.date.day}, {state.date.year}
           </Typography>
-          <Typography variant="body1" sx={{ fontWeight: "bold", mt: 2 }}>
+          <Typography variant="body1" sx={{ fontWeight: "bold", mt: 2, fontSize: "18px" }}>
             Additional notes:
           </Typography>
-          <Typography variant="body1">
+          <Typography variant="body1" sx={{ fontSize: "18px", marginTop:"-5px" }}>
             {state.description ? state.description : "None"}
           </Typography>
         </Container>

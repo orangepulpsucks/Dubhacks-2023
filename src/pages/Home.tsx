@@ -182,7 +182,7 @@ const Home: React.FC = () => {
           color="secondary"
           fullWidth
           size="large"
-          sx={{ mb: 1, color: "white", borderRadius: "30px", backgroundColor: "#8BABF1" }}
+          sx={{ mb: 1, borderRadius: "30px", backgroundColor: "white", fontColor: "gray", fontSize: "19px" }}
           onClick={manualCreate}
         >
           Create Event Manually

@@ -107,7 +107,7 @@ const EventUpdate: React.FC = () => {
     <CustomPage contentHeight="calc(100% - 100px)">
       {/* Header */}
       <Container sx={{ my: 3, px: 2, width: "100%" }}>
-        <Typography variant="h4" sx={{ fontWeight: "bold", fontSize: "39px", fontFamily: "Helvetica, sans-serif", marginBottom: "5px", color: "#3a3b3c" }}>
+        <Typography variant="h4" sx={{ fontWeight: "bold", fontSize: "35px", fontFamily: "Helvetica, sans-serif", marginBottom: "5px", color: "#3a3b3c" }}>
           {isCreate ? 'Create' : 'Update'} Event
         </Typography>
       </Container>
@@ -125,6 +125,8 @@ const EventUpdate: React.FC = () => {
           onChange={handleTitleChange}
           sx={{ mb: 1 }}
         />
+          <hr style={{ backgroundColor: "white", height: "1px", border: "none" }} />
+
         <TextField
           label="Additional Notes"
           variant="outlined"
@@ -133,6 +135,8 @@ const EventUpdate: React.FC = () => {
           onChange={handleDescriptionChange}
           sx={{ mb: 1 }}
         />
+
+        
 
         <Typography variant="body1" sx={{ fontWeight: "bold", fontSize: "20px", fontFamily: "Helvetica, sans-serif", marginBottom: "5px", color: "#3a3b3c" }}>
           Event Date
@@ -212,7 +216,7 @@ const EventUpdate: React.FC = () => {
 
       {/* Buttons at the bottom */}
       <Container sx={{ py: 2 }} className="button-stack-2">
-        <Button variant="contained" fullWidth size="large" sx={{ my: 1, borderRadius: "30px" }} onClick={handleConfirm}>
+        <Button variant="contained" fullWidth size="large" sx={{ my: 1, borderRadius: "30px", color: "white" }} onClick={handleConfirm}>
           Confirm
         </Button>
         <Button variant="outlined" color="secondary" fullWidth size="large" sx={{ mb: 1, borderRadius: "30px" }} onClick={handleCancel}>
