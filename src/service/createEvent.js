@@ -67,12 +67,6 @@ async function authorize() {
 }
 
 
-test =  {
-  title: 'Hey',
-  startDate: {month: 10, day: 18, year: 2023},
-  priority: 2
-}
-
 
 let name = test.title;
 
@@ -116,6 +110,7 @@ const event = {
     ],
   },
 };
+
 
 
 /*
