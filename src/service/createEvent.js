@@ -66,81 +66,25 @@ async function authorize() {
   return client;
 }
 
-
-
-let name = test.title;
-
-let start_date = test.startDate;
-let start_date_year = start_date.year;
-let start_date_month =start_date.month;
-let start_date_day = start_date.day;
-
-let start_date_finalize = start_date_year+"-"+start_date_month+"-"+start_date_day;
-
-console.log (start_date_finalize)
-
-let user_gmail = 'steveng.gwy@gmail.com';
-
-let color = test.priority;
-
-let name_finalize = name + ' (' + color + ')';
-
-
-
-const event = {
-  'summary': name_finalize,
-  'start': {
-    'date': start_date_finalize,
-  },
-  'end': {
-    'date': start_date_finalize,
-  },
-  'recurrence': [
-    'RRULE:FREQ=DAILY;COUNT=2'
-  ],
-  'colorId' : 2,
-  'attendees': [
-    {'email': user_gmail}
-  ],
-  'reminders': {
-    'useDefault': false,
-    'overrides': [
-      {'method': 'email', 'minutes': 24 * 60},
-      {'method': 'popup', 'minutes': 10},
+function getEvent(json) {
+  const date = json.date.year + "-" + json.date.month + "-" + json.date.day;
+  const event = {
+    'summary': json.title,
+    'start': {
+      'date': date,
+    },
+    'end': {
+      'date': date,
+    },
+    'description' : json.summary,
+    'recurrence': [
+      'RRULE:FREQ=DAILY;COUNT=2'
     ],
-  },
-};
+    'colorId' : 2
+  };
 
-
-
-/*
-const event = {
-  'summary': 'Google I/O 2015',
-  'location': '800 Howard St., San Francisco, CA 94103',
-  'description': 'A chance to hear more about Google\'s developer products.',
-  'start': {
-    'dateTime': '2023-10-29T17:00:00-07:00',
-    'timeZone': 'America/Los_Angeles',
-  },
-  'end': {
-    'dateTime': '2023-10-29T17:00:00-07:00',
-    'timeZone': 'America/Los_Angeles',
-  },
-  'recurrence': [
-    'RRULE:FREQ=DAILY;COUNT=2'
-  ],
-  'attendees': [
-    {'email': 'steveng.gwy@gmail.com'}
-  ],
-  'reminders': {
-    'useDefault': false,
-    'overrides': [
-      {'method': 'email', 'minutes': 24 * 60},
-      {'method': 'popup', 'minutes': 10},
-    ],
-  },
-};
-*/
+  return event;
+}
 
 
 async function clearSavedUser() {
@@ -148,12 +92,12 @@ async function clearSavedUser() {
 }
 
 /**
- * Lists the next 10 events on the user's primary calendar.
- * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
+ * Inserts given event
  */
-async function insertEvent(auth) {
+async function insertEvent(auth, json) {
+  const event = getEvent(json);
   const calendar = google.calendar({version: 'v3', auth});
-  const res = await calendar.events.insert({
+  await calendar.events.insert({
     calendarId: 'primary',
     resource: event,
   }, function(err, event) {
@@ -164,6 +108,7 @@ async function insertEvent(auth) {
     console.log('Event created: %s', event.htmlLink);
   });
 }
+
 
 /*
 Lists next 15 events within the of current event
@@ -181,20 +126,18 @@ async function listEvents(auth) {
   if (!events || events.length === 0) {
     return;
   }
-
-
-  eventJsons = Array.from({length: 5});
+  let eventJsons = Array.from({length: events.length});
 
   events.map((event, i) => {
     const dateArr = event.start.date.split("-").map(str => parseInt(str, 10));
     const title = event.summary;
     const summary = event.description;
-    const priority = 3;
+    let priority = 3;
     if (title.length >= 3 && title.charAt(title.length-3) == '(' && Number.isInteger(title.charAt(title.length-2)) && title.charAt(title.length-1) == ')') {
       priority = parseInt(title.charAt(title.length-2));
     }
 
-    json =  {
+    const json =  {
       title: title,
       summary: summary,
       date: {month: dateArr[1], day: dateArr[2], year: dateArr[0]},
@@ -206,52 +149,16 @@ async function listEvents(auth) {
   return eventJsons;
 }
 
-async function updateevent(auth) {
+async function updateEvent(auth, eventId, json) {
   const calendar = google.calendar({version: 'v3', auth});
 
-  const res = await calendar.events.list({
-    calendarId: 'primary',
-    timeMin: new Date().toISOString(),
-    maxResults: 1,
-    singleEvents: true,
-    orderBy: 'startTime',
-  });
+  const event = getEvent(json);
 
-  const events = res.data.items;
-  const eventId = 'eventId'; // import eventId here
-
-  if (!events || events.length === 0) {
-    console.log('No upcoming events found.');
-    return;
-  }
-
-  //update function called
-
-  const updatedEvent = {
-    summary: 'Good',
-    start: {
-      date: '2023-12-31', // Update with your desired start date
-    },
-    end: {
-      date: '2023-12-31', // Update with your desired end date
-    },
-    colorId: 2, // Update with your desired color ID
-    attendees: [
-      { email: 'steveng.gwy@gmail.com' }, // Update with the email of the attendee
-    ],
-    reminders: {
-      useDefault: false,
-      overrides: [
-        { method: 'email', minutes: 24 * 60 },
-        { method: 'popup', minutes: 10 },
-      ],
-    },
-  };
   
   calendar.events.update({
     calendarId: 'primary',
     eventId: eventId,
-    resource: updatedEvent,
+    resource: event,
   }, (err, res) => {
     if (err) {
       console.error('Error updating event:', err);
