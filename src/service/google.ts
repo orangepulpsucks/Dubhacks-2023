@@ -1,9 +1,30 @@
 import { authenticate } from '@google-cloud/local-auth';
 import { google } from 'googleapis';
 
-async function insertEvent(auth: any, event: any) {
-    const calendar = google.calendar({version: 'v3', auth});
-    const res = await calendar.events.insert({
+/*const getEvent = (json: any) => {
+  const date = json.date.year + "-" + json.date.month + "-" + json.date.day;
+  const event = {
+    'summary': json.title,
+    'start': {
+      'date': date,
+    },
+    'end': {
+      'date': date,
+    },
+    'description' : json.summary,
+    'recurrence': [
+      'RRULE:FREQ=DAILY;COUNT=2'
+    ],
+    'colorId' : 2
+  };
+
+  return event;
+}
+
+export async function insertEvent(auth: any, json: any) {
+    const calendar = google.calendar({ version: 'v3', auth });
+    const event = getEvent(json);
+    calendar.events.insert({
       calendarId: 'primary',
       resource: event,
     }, function(err: any, event: any) {
@@ -18,7 +39,8 @@ async function insertEvent(auth: any, event: any) {
   /*
   Lists next 15 events within the of current event
   */
-  async function listEvents(auth: any) {
+export async function listEvents(auth: any) {
+  console.log("start of listevents")
     const calendar = google.calendar({version: 'v3', auth});
     const res = await calendar.events.list({
       calendarId: 'primary',
@@ -56,7 +78,7 @@ async function insertEvent(auth: any, event: any) {
     return eventJsons;
   }
   
-  async function updateevent(auth: any) {
+/*export async function updateEvent(auth: any) {
     const calendar = google.calendar({version: 'v3', auth});
   
     const res = await calendar.events.list({
@@ -109,4 +131,4 @@ async function insertEvent(auth: any, event: any) {
       }
       console.log('Event updated:', res.data);
     });
-  }
+  }*/

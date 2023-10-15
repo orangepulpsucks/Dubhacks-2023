@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Button, Container, Typography } from '@mui/material';
 import { useDispatch } from 'react-redux';
 import { useGoogleLogin } from '@react-oauth/google';
@@ -45,7 +45,7 @@ const Landing: React.FC = () => {
         <img src="./favicon.svg" id='landing-logo' />
         <Typography id='landing-text'>Snip-Cal 🌿</Typography>
         <Button id='landing-button' sx={{ fontSize: '16px' }}variant="contained" onClick={() => login()}>
-          Connect with Google Calendar
+          Connect with Google
         </Button>
         </Container>
     </CustomPage>

@@ -16,7 +16,7 @@ const combinedReducer = combineReducers({
 
 const persistConfig = {
   key: 'snip-cal-root',
-  whitelist: [],
+  whitelist: [eventsSlice.name],
   storage
 }
 const persistedReducer = persistReducer(persistConfig, combinedReducer);

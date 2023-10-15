@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Container, Typography } from '@mui/material';
 import { useHistory, useParams } from 'react-router';
 
 import CustomPage from '../components/CustomPage';
 import { setLast } from '../store/slices/events';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectAllState } from '../store/slices/events';
 
 const months = [
   "January",
@@ -25,8 +27,10 @@ const selectedColors = [
 ];
 
 const EventDetails: React.FC = () => {
+  const dispatch = useDispatch();
   const history = useHistory();
   const { id }: any = useParams();
+  const allState = useSelector(selectAllState);
   const [state, setState] = useState({
     title: 'Loading...',
     date: {
@@ -37,6 +41,17 @@ const EventDetails: React.FC = () => {
     description: '',
     priority: 3
   });
+
+  useEffect(() => {
+    if(allState) {
+      const idx = allState.findIndex((event: any) => event.id == id);
+      if (idx >= 0) {
+        setState(allState[idx]);
+      }
+
+      dispatch(setLast(allState[idx]));
+    }
+  }, [allState]);
 
   // Button handlers
   const handleEdit = () => {

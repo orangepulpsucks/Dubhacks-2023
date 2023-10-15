@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Container, Grid, Typography, IconButton } from '@mui/material';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Camera, CameraResultType } from '@capacitor/camera';
 import { useHistory } from 'react-router';
 
@@ -9,6 +9,8 @@ import GenEventInfo from '../service/util';
 import { setNewAlert } from '../service/alert';
 import { setLast } from '../store/slices/events';
 import { OPENAI_KEY } from '../keys';
+import { selectTokenState } from '../store/slices/creds';
+import { selectAllState } from '../store/slices/events';
 
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
@@ -16,6 +18,21 @@ import CameraAltIcon from '@mui/icons-material/CameraAlt';
 const selectedColors = [
   'rgb(139, 171, 241, 0.6)'
 ];
+
+const months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December"
+]
 
 // Function to generate random pastel colors
 function getRandomColor() {
@@ -30,7 +47,12 @@ function getRandomColor() {
 const Home: React.FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
+  const token = useSelector(selectTokenState);
+  const allState = useSelector(selectAllState);
 
+  const [events, setEvents] = useState(allState);
+
+  // OpenAPI config
   const generator = new GenEventInfo(OPENAI_KEY);
   let generatorReady = false;
   generator.init().then(() => {
@@ -100,10 +122,6 @@ const Home: React.FC = () => {
     history.push('/event/new/update');
   }
 
-  const hardCodedEvents = [
-    0, 1, 2, 3, 4
-  ]
-
   return (
     <CustomPage contentHeight="calc(100% - 150px)">
       {/* Header */}
@@ -118,24 +136,24 @@ const Home: React.FC = () => {
 
       {/* Events */}
       <Container sx={{ px: 2 }}>
-        {
-          hardCodedEvents.map((event, i) => {
+        {events.length > 0 ?
+          events.map((event: any, i: any) => {
             const backgroundColor = selectedColors[i % selectedColors.length];            
             return (
               <Container key={i} sx={{ my: 1, py: 1 }} className="event-item" style={{ backgroundColor }}>
                 <Grid container>
                   <Grid item xs={9} sm={10} md={11}>
                     <Typography variant="h5" sx={{ fontWeight: "bold", fontSize: "28px", marginBottom: "1px" }}>
-                      Lunch with Johnny
+                      {event.title}
                     </Typography>
                     <hr style={{ backgroundColor: "white", height: "1px", border: "none" }} />
                     <Typography variant="body1" sx={{ fontSize: "20px" }}>
-                      December 9, 2023
+                      {months[event.date.month-1]} {event.date.day}, {event.date.year}
                     </Typography>
                    
                   </Grid>
                   <Grid item xs={3} sm={2} md={1} sx={{ display: "flex" }}>
-                    <IconButton size="large" sx={{ marginLeft: "auto", color: "#ffffff" }}>
+                    <IconButton size="large" sx={{ marginLeft: "auto", color: "#ffffff" }} href={'/event/' + event.id + '/details'}>
                       <ArrowForwardIcon fontSize="inherit" />
                     </IconButton>
                   </Grid>
@@ -143,6 +161,10 @@ const Home: React.FC = () => {
               </Container>
             )
           })
+          :
+          <Typography textAlign="center" sx={{ mt: 2 }}>
+            You have no upcoming events!
+          </Typography>
         }
       </Container>
 

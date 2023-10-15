@@ -6,6 +6,7 @@ import { useParams, useHistory, useLocation } from 'react-router';
 import CustomPage from '../components/CustomPage';
 import { selectLastState } from '../store/slices/events';
 import { setNewAlert } from '../service/alert';
+import { addEvent, updateEvent } from '../store/slices/events';
 
 // Helper function for generating ranges from start inclusive to stop exclusive
 const range = (start: number, stop: number) => {
@@ -48,7 +49,25 @@ const EventUpdate: React.FC = () => {
 
   // Button handlers
   const handleConfirm = () => {
-    // TODO: 2 CASES - IS NEW EVENT OR UPDATE EVENT
+    if(isCreate) {
+      dispatch(addEvent(data));
+
+      setNewAlert(dispatch, {
+        alertType: 'success',
+        msg: 'Successfully created event'
+      });
+
+      history.push('/home');
+    } else {
+      dispatch(updateEvent({ id, event: data }));
+
+      setNewAlert(dispatch, {
+        alertType: 'success',
+        msg: 'Successfully updated event'
+      });
+
+      history.push('/event/' + id + '/details');
+    }
   }
 
   const handleCancel = () => {
