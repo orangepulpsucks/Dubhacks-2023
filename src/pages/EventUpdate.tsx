@@ -107,7 +107,7 @@ const EventUpdate: React.FC = () => {
     <CustomPage contentHeight="calc(100% - 100px)">
       {/* Header */}
       <Container sx={{ my: 3, px: 2, width: "100%" }}>
-        <Typography variant="h4" sx={{ fontWeight: "bold", fontSize: "39px", fontFamily: "Helvetica, sans-serif", marginBottom: "5px", color: "#3a3b3c" }}>
+        <Typography variant="h4" sx={{ fontWeight: "bold", fontSize: "35px", fontFamily: "Helvetica, sans-serif", marginBottom: "5px", color: "#3a3b3c" }}>
           {isCreate ? 'Create' : 'Update'} Event
         </Typography>
       </Container>
