@@ -5,6 +5,7 @@ import {
   setupIonicReact
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 /* Your page imports */
 import Landing from './pages/Landing';
@@ -36,23 +37,25 @@ const App: React.FC = () => {
 
   return (
     <IonApp>
-      <IonReactRouter>
-        <IonRouterOutlet>
-          {/** Page routing here */}
-          <Route exact path="/">
-            <Landing />
-          </Route>
-          <Route exact path="/home">
-            <Home />
-          </Route>
-          <Route exact path="/event/:id/details">
-            <EventDetails />
-          </Route>
-          <Route exact path="/event/:id/update">
-            <EventUpdate />
-          </Route>
-        </IonRouterOutlet>
-      </IonReactRouter>
+      <GoogleOAuthProvider clientId="1008397358579-890um7lj3iepcnab1f1lielf12pdklib.apps.googleusercontent.com">
+        <IonReactRouter>
+          <IonRouterOutlet>
+            {/** Page routing here */}
+            <Route exact path="/">
+              <Landing />
+            </Route>
+            <Route exact path="/home">
+              <Home />
+            </Route>
+            <Route exact path="/event/:id/details">
+              <EventDetails />
+            </Route>
+            <Route exact path="/event/:id/update">
+              <EventUpdate />
+            </Route>
+          </IonRouterOutlet>
+        </IonReactRouter>
+      </GoogleOAuthProvider>
     </IonApp>
   );
 }

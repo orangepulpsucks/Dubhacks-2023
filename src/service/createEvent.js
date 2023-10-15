@@ -67,12 +67,6 @@ async function authorize() {
 }
 
 
-test =  {
-  title: 'Hey',
-  startDate: {month: 10, day: 18, year: 2023},
-  priority: 2
-}
-
 
 let name = test.title;
 
@@ -116,6 +110,7 @@ const event = {
     ],
   },
 };
+
 
 
 /*
@@ -184,16 +179,87 @@ async function listEvents(auth) {
   });
   const events = res.data.items;
   if (!events || events.length === 0) {
+    return;
+  }
+
+
+  eventJsons = Array.from({length: 5});
+
+  events.map((event, i) => {
+    const dateArr = event.start.date.split("-").map(str => parseInt(str, 10));
+    const title = event.summary;
+    const summary = event.description;
+    const priority = 3;
+    if (title.length >= 3 && title.charAt(title.length-3) == '(' && Number.isInteger(title.charAt(title.length-2)) && title.charAt(title.length-1) == ')') {
+      priority = parseInt(title.charAt(title.length-2));
+    }
+
+    json =  {
+      title: title,
+      summary: summary,
+      date: {month: dateArr[1], day: dateArr[2], year: dateArr[0]},
+      priority: priority
+    };
+
+    eventJsons[i] = [event.id, json];
+  });
+  return eventJsons;
+}
+
+async function updateevent(auth) {
+  const calendar = google.calendar({version: 'v3', auth});
+
+  const res = await calendar.events.list({
+    calendarId: 'primary',
+    timeMin: new Date().toISOString(),
+    maxResults: 1,
+    singleEvents: true,
+    orderBy: 'startTime',
+  });
+
+  const events = res.data.items;
+  const eventId = 'eventId'; // import eventId here
+
+  if (!events || events.length === 0) {
     console.log('No upcoming events found.');
     return;
   }
-  console.log('Upcoming 10 events:');
-  events.map((event, i) => {
-    const start = event.start.dateTime || event.start.date;
-    console.log(`${start} - ${event.summary}`);
+
+  //update function called
+
+  const updatedEvent = {
+    summary: 'Good',
+    start: {
+      date: '2023-12-31', // Update with your desired start date
+    },
+    end: {
+      date: '2023-12-31', // Update with your desired end date
+    },
+    colorId: 2, // Update with your desired color ID
+    attendees: [
+      { email: 'steveng.gwy@gmail.com' }, // Update with the email of the attendee
+    ],
+    reminders: {
+      useDefault: false,
+      overrides: [
+        { method: 'email', minutes: 24 * 60 },
+        { method: 'popup', minutes: 10 },
+      ],
+    },
+  };
+  
+  calendar.events.update({
+    calendarId: 'primary',
+    eventId: eventId,
+    resource: updatedEvent,
+  }, (err, res) => {
+    if (err) {
+      console.error('Error updating event:', err);
+      return;
+    }
+    console.log('Event updated:', res.data);
   });
 }
-
 
 //authorize().then(insertEvent).catch(console.error);
 authorize().then(listEvents).catch(console.error);
