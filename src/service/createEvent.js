@@ -1,3 +1,5 @@
+import { test} from './util.mjs'
+
 const fs = require('fs').promises;
 const path = require('path');
 const process = require('process');
@@ -66,25 +68,40 @@ async function authorize() {
   return client;
 }
 
-let start_date = '2023-10-29T09:00:00-07:00'
+
+let name = test.parameters.properties.title.title;
+let summary = test.parameters.properties.title.description;
+
+let start_date = test.parameters.properties.start_Date;
+let start_date_year = test.parameters.properties.year;
+let start_date_month =test.parameters.properties.month;
+let start_date_day = test.parameters.properties.day;
+
+let start_date_year_string = start_date_year.toISOString;
+let start_date_month_string = start_date_month.toISOString;
+let start_date_day_string = start_date_day.toISOString;
+let start_date_finalize = '${start_date_year_string}${-}${start_date_month_string}${-}${start_date_day}${T}${start_date_year_string}${-}${start_date_month_string}${-}${start_date_day}';
+
+
+let user_gmail = 'steveng.gwy@gmail.com';
+
+let color = test.parameters.properties.priority;
 
 const event = {
-  'summary': 'Google I/O 2015',
-  'location': '800 Howard St., San Francisco, CA 94103',
-  'description': 'A chance to hear more about Google\'s developer products.',
+  'summary': name,
+  'description' : summary,
   'start': {
-    'dateTime': start_date,
-    'timeZone': 'America/Los_Angeles',
+    'date': start_date_finalize,
   },
   'end': {
-    'dateTime': '2023-10-29T17:00:00-07:00',
-    'timeZone': 'America/Los_Angeles',
+    'dateTime': start_date_finalize,
   },
   'recurrence': [
     'RRULE:FREQ=DAILY;COUNT=2'
   ],
+  'colorId' : color,
   'attendees': [
-    {'email': 'steveng.gwy@gmail.com'}
+    {user_gmail}
   ],
   'reminders': {
     'useDefault': false,
@@ -94,6 +111,9 @@ const event = {
     ],
   },
 };
+
+
+
 
 async function clearSavedUser() {
   const content = await fs.readFile(CREDENTIALS_PATH);
