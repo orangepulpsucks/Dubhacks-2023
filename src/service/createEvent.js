@@ -211,6 +211,60 @@ async function listEvents(auth) {
   return eventJsons;
 }
 
+async function updateevent(auth) {
+  const calendar = google.calendar({version: 'v3', auth});
+
+  const res = await calendar.events.list({
+    calendarId: 'primary',
+    timeMin: new Date().toISOString(),
+    maxResults: 1,
+    singleEvents: true,
+    orderBy: 'startTime',
+  });
+
+  const events = res.data.items;
+  const eventId = 'eventId'; // import eventId here
+
+  if (!events || events.length === 0) {
+    console.log('No upcoming events found.');
+    return;
+  }
+
+  //update function called
+
+  const updatedEvent = {
+    summary: 'Good',
+    start: {
+      date: '2023-12-31', // Update with your desired start date
+    },
+    end: {
+      date: '2023-12-31', // Update with your desired end date
+    },
+    colorId: 2, // Update with your desired color ID
+    attendees: [
+      { email: 'steveng.gwy@gmail.com' }, // Update with the email of the attendee
+    ],
+    reminders: {
+      useDefault: false,
+      overrides: [
+        { method: 'email', minutes: 24 * 60 },
+        { method: 'popup', minutes: 10 },
+      ],
+    },
+  };
+  
+  calendar.events.update({
+    calendarId: 'primary',
+    eventId: eventId,
+    resource: updatedEvent,
+  }, (err, res) => {
+    if (err) {
+      console.error('Error updating event:', err);
+      return;
+    }
+    console.log('Event updated:', res.data);
+  });
+}
 
 //authorize().then(insertEvent).catch(console.error);
 authorize().then(listEvents).catch(console.error);
