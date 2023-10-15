@@ -216,7 +216,7 @@ const EventUpdate: React.FC = () => {
 
       {/* Buttons at the bottom */}
       <Container sx={{ py: 2 }} className="button-stack-2">
-        <Button variant="contained" fullWidth size="large" sx={{ my: 1, borderRadius: "30px" }} onClick={handleConfirm}>
+        <Button variant="contained" fullWidth size="large" sx={{ my: 1, borderRadius: "30px", color: "white" }} onClick={handleConfirm}>
           Confirm
         </Button>
         <Button variant="outlined" color="secondary" fullWidth size="large" sx={{ mb: 1, borderRadius: "30px" }} onClick={handleCancel}>
