@@ -23,10 +23,24 @@ export const eventsSlice = createSlice({
             state.last = action.payload;
         },
         addEvent: (state, action) => {
+            const compareDates = (a: any, b: any) => {
+                const dateA = new Date(a.date.year, a.date.month, a.date.day);
+                const dateB = new Date(b.date.year, b.date.month, b.date.day);
+            
+                if (dateA < dateB) {
+                    return -1;
+                } else if (dateA > dateB) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }
+
             state.all.push({
                 ...action.payload,
                 id: uuidv4()
             });
+            state.all.sort(compareDates);
         },
         updateEvent: (state, action) => {
             const { id, event } = action.payload;
