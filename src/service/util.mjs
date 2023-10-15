@@ -1,7 +1,6 @@
 import Configuration from "openai";
 import OpenAIApi from "openai";
 import Ajv from "ajv";
-import CreateChatCompletion from "openai";
 import {createWorker} from "tesseract.js";
 
 const RETRIES_MAX = 5;
@@ -70,14 +69,14 @@ const SCHEMA = {
                 }
               }
 
-// tesseract = require('tesseract.js');
-export async function getText(worker, imagePath) {
+
+async function getText(worker, imagePath) {
   const { data: { text } } = await worker.recognize(imagePath);
   return text
 }
 
 
-export async function parseEventInfo(openAI, eventTextInfo, today, ajv) {
+async function parseEventInfo(openAI, ajv, eventTextInfo, today) {
   const systemPromptWithDate = SYSTEM_PROMPT + today.toString();
   let retries = 0;
   
@@ -85,7 +84,7 @@ export async function parseEventInfo(openAI, eventTextInfo, today, ajv) {
   while (true) {
     if (retries >= RETRIES_MAX) {
       retries++;
-      return null; // Failure
+      return null; // Failure if gpt retries too often
     }
     
     const chat = await openAI.chat.completions.create({
@@ -100,20 +99,21 @@ export async function parseEventInfo(openAI, eventTextInfo, today, ajv) {
       function_call: "auto"
     })
     
-      let res = chat.data.choices[0].message.content;
+      let res = chat.choices[0].message;
       let resJson;
 
       try {
-        resJson = JSON.parse(res);
+        resJson = JSON.parse(res.function_call.arguments);
       } catch {
         retries++;
         continue;
       }
 
-      const validate = ajv.compile(schema);
-      const isValid = validate(resJson);
+      console.log(SCHEMA.parameters);
 
-      if (isValid) {
+      const valid = ajv.validate(SCHEMA.parameters, resJson);
+
+      if (valid) {
         return resJson
       } else {
         retries++;
@@ -122,14 +122,36 @@ export async function parseEventInfo(openAI, eventTextInfo, today, ajv) {
   }
 }
 
+export async function parseEventFromImage(worker, imagePath, openAI, ajv, eventTextInfo, today) {
+  const eventTextInfo = await getText(worker, imagePath);
+  const resJson = await parseEventInfo(openai, ajv, eventTextInfo, today);
+  return resJson;
+}
 
 
-/*
+export async function getJson(t, p, sDay, sMonth, sYear, eDay = null, eMonth = null, eYear = null) {
+  if(eDay == null | eMonth == null | eYear == null) {
+    return {
+      title: t,
+      startDate: {month: sMonth, day: sDay, year: sYear},
+      priority: p
+    }
+  } else {
+    return {
+      title: t,
+      startDate: {month: sMonth, day: sDay, year: sYear},
+      endDate: {month: eMonth, day: eDay, year: eYear},
+      priority: p
+    }
+  }
+}
+
 const config = new Configuration({
-    apiKey: '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'
+    apiKey: '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'
   });
 const openai = new OpenAIApi(config);
 
+/*
 const worker = await createWorker('eng', 1, {
     logger: m => console.log(m), // Add logger here
   });
@@ -140,7 +162,16 @@ const today = new Date()
 
 const ajv = new Ajv();
 
-const test = parseEventInfo(openai, eventTextInfo, today, ajv);
-
+const test = await parseEventInfo(openai, ajv, eventTextInfo, today);
 console.log(test);
+*/
+
+/*
+
+{
+  title: "Jimmy's Birthday",
+  startDate: { month: 10, day: 15, year: 2023 },
+  priority: 8
+}
+
 */
