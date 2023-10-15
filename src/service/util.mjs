@@ -129,7 +129,7 @@ export async function parseEventFromImage(worker, imagePath, openAI, ajv, eventT
 }
 
 
-export async function getJson(t, p, sDay, sMonth, sYear, eDay = null, eMonth = null, eYear = null) {
+export function getJson(t, p, sDay, sMonth, sYear, eDay = null, eMonth = null, eYear = null) {
   if(eDay == null | eMonth == null | eYear == null) {
     return {
       title: t,
@@ -151,20 +151,12 @@ const config = new Configuration({
   });
 const openai = new OpenAIApi(config);
 
-/*
-const worker = await createWorker('eng', 1, {
-    logger: m => console.log(m), // Add logger here
-  });
+getJson("nruh", )
 
-const eventTextInfo = await getText(worker, "./test.png");
 
-const today = new Date()
-
-const ajv = new Ajv();
-
-const test = await parseEventInfo(openai, ajv, eventTextInfo, today);
+const test = await 
 console.log(test);
-*/
+
 
 /*
 
@@ -173,5 +165,4 @@ console.log(test);
   startDate: { month: 10, day: 15, year: 2023 },
   priority: 8
 }
-
 */
