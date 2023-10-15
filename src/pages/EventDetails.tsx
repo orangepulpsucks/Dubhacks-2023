@@ -20,6 +20,10 @@ const months = [
   "December"
 ]
 
+const selectedColors = [
+  'rgb(139, 171, 241, 0.6)'
+];
+
 const EventDetails: React.FC = () => {
   const history = useHistory();
   const { id }: any = useParams();
@@ -47,7 +51,7 @@ const EventDetails: React.FC = () => {
     <CustomPage contentHeight="calc(100% - 150px)">
       {/* Header */}
       <Container sx={{ my: 3, px: 2, width: "100%" }}>
-        <Typography variant="h4" sx={{ fontWeight: "bold" }}>
+        <Typography variant="h4" sx={{ fontWeight: "bold", fontSize: "39px", fontFamily: "Helvetica, sans-serif", marginBottom: "5px", color: "#3a3b3c" }}>
           View Event
         </Typography>
       </Container>
@@ -72,10 +76,10 @@ const EventDetails: React.FC = () => {
 
       {/* Buttons at bottom */}
       <Container sx={{ py: 2 }} className="button-stack-2">
-        <Button variant="contained" fullWidth size="large"sx={{ my: 1 }} onClick={handleEdit}>
+        <Button variant="contained" fullWidth size="large"sx={{ my: 1, borderRadius: "30px" }} onClick={handleEdit}>
           Edit
         </Button>
-        <Button variant="outlined" color="secondary" fullWidth size="large" sx={{ mb: 1 }} onClick={handleCancel}>
+        <Button variant="outlined" color="secondary" fullWidth size="large" sx={{ mb: 1, borderRadius:"30px" }} onClick={handleCancel}>
           Cancel
         </Button>
       </Container>
