@@ -67,12 +67,12 @@ const SCHEMA = {
                   },
                   required: ["title", "startDate", "priority"]
                 }
-              }
+              };
 
 
 async function getText(worker, imagePath) {
   const { data: { text } } = await worker.recognize(imagePath);
-  return text
+  return text;
 }
 
 
@@ -97,7 +97,7 @@ async function parseEventInfo(openAI, ajv, eventTextInfo, today) {
         SCHEMA
       ],
       function_call: "auto"
-    })
+    });
     
       let res = chat.choices[0].message;
       let resJson;
@@ -114,7 +114,7 @@ async function parseEventInfo(openAI, ajv, eventTextInfo, today) {
       const valid = ajv.validate(SCHEMA.parameters, resJson);
 
       if (valid) {
-        return resJson
+        return resJson;
       } else {
         retries++;
         continue;
@@ -129,20 +129,29 @@ export async function parseEventFromImage(worker, imagePath, openAI, ajv, eventT
 }
 
 
-export function getJson(t, p, sDay, sMonth, sYear, eDay = null, eMonth = null, eYear = null) {
+export function getJson(ajv, t, p, sDay, sMonth, sYear, eDay = null, eMonth = null, eYear = null) { // Should I just make constructor to initialize the ajv which is used over and over?
+  let json;
   if(eDay == null | eMonth == null | eYear == null) {
-    return {
+    json =  {
       title: t,
       startDate: {month: sMonth, day: sDay, year: sYear},
       priority: p
     }
   } else {
-    return {
+    json = {
       title: t,
       startDate: {month: sMonth, day: sDay, year: sYear},
       endDate: {month: eMonth, day: eDay, year: eYear},
       priority: p
     }
+  }
+
+  const valid = ajv.validate(SCHEMA.parameters, json);
+
+  if (valid) {
+    return json;
+  } else {
+    return "";
   }
 }
 
