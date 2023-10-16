@@ -3,6 +3,15 @@ We are **CTRL + ALT + DEFEAT**! This is our submission for **Dubhacks '23**. We'
 
 **Hackathon Submission:** https://devpost.com/software/snip-cal
 
+## Welcome Page
+![Welcome](https://github.com/orangepulpsucks/Dubhacks_2023/assets/42681894/bfb18770-f4d0-4fc4-a091-01c3a9c06c56)
+
+## Home Page
+![Home](https://github.com/orangepulpsucks/Dubhacks_2023/assets/42681894/6c46752a-e974-49c6-a799-2c9449985395)
+
+
+
+
 # Getting Started(Source Code)
 
 1. Install dependencies in the project directory:
